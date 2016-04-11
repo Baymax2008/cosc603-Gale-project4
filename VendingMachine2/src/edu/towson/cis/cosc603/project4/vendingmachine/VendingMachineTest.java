@@ -1,6 +1,7 @@
 package edu.towson.cis.cosc603.project4.vendingmachine;
 
 import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -86,7 +87,12 @@ public class VendingMachineTest {
 
 		fixture.addItem(item, code);
 
-		// add additional test code here
+		String code_b = "B";
+		fixture.addItem(item, code_b);
+		String code_c = "C";
+		fixture.addItem(item, code_c);
+		String code_d = "D";
+		fixture.addItem(item, code_d);
 	}
 
 	/**
@@ -105,8 +111,34 @@ public class VendingMachineTest {
 		String code = "";
 
 		fixture.addItem(item, code);
-
-		// add additional test code here
+		
+	}
+	
+	/**
+	 * Run the void addItem(VendingMachineItem,String) method test.
+	 *
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 4/11/16 12:38 AM
+	 */
+	@Test
+	public void testAddItem_4() {
+		VendingMachine fixture = new VendingMachine();
+		fixture.balance = 1.0;
+		VendingMachineItem item = new VendingMachineItem("CandyBar", 1.0);
+		String code = "A";
+		
+		fixture.addItem(item, code);
+	
+		try {
+			
+			fixture.addItem(item, code);
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Slot A already occupied";
+	        assertEquals( expected, e.getMessage());
+	    }		
 	}
 
 	/**
@@ -285,6 +317,30 @@ public class VendingMachineTest {
 		// add additional test code here
 		assertTrue(result);
 	}
+	
+	/**
+	 * Run the boolean makePurchase(String) method test.
+	 *
+	 * @throws Exception
+	 *
+	 * @generatedBy CodePro at 4/11/16 12:38 AM
+	 */
+	@Test
+	public void testMakePurchase_5()
+		throws Exception {
+		VendingMachine fixture = new VendingMachine();
+		fixture.balance = 1.0;
+		VendingMachineItem item = new VendingMachineItem("CandyBar", 1.0);
+		String code = "A";
+		
+		fixture.addItem(item, code);
+
+
+		boolean result = fixture.makePurchase(code);
+
+		// add additional test code here
+		assertTrue(result);
+	}
 
 	/**
 	 * Run the VendingMachineItem removeItem(String) method test.
@@ -339,6 +395,29 @@ public class VendingMachineTest {
 		VendingMachine fixture = new VendingMachine();
 		fixture.balance = 1.0;
 		String code = "A";
+
+		VendingMachineItem result = fixture.removeItem(code);
+
+		// add additional test code here
+		assertNotNull(result);
+	}
+	
+	/**
+	 * Run the VendingMachineItem removeItem(String) method test.
+	 *
+	 * 
+	 *
+	 * 
+	 */
+	@Test
+	public void testRemoveItem_4()
+		throws Exception {
+		VendingMachine fixture = new VendingMachine();
+		fixture.balance = 1.0;
+		VendingMachineItem item = new VendingMachineItem("CandyBar", 1.0);
+		String code = "A";
+		
+		fixture.addItem(item, code);
 
 		VendingMachineItem result = fixture.removeItem(code);
 
