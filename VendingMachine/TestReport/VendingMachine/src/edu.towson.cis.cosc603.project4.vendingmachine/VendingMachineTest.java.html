@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VendingMachineTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Apr 10, 2016 11:09:00 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc603.project4.vendingmachine</a> &gt; <span class="el_source">VendingMachineTest.java</span></div><h1>VendingMachineTest.java</h1><pre class="source lang-java linenums">package edu.towson.cis.cosc603.project4.vendingmachine;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
+<span class="fc" id="L10">public class VendingMachineTest {</span>
+
+	VendingMachine building6008VendingMachine;
+	VendingMachineItem reeseCup, butterfingers, milkyWay, fifthAvenue, payDay;
+	
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L17">		building6008VendingMachine = new VendingMachine();</span>
+<span class="fc" id="L18">		reeseCup = new VendingMachineItem( &quot;Reese Cup&quot;, 0.75);</span>
+<span class="fc" id="L19">		butterfingers = new VendingMachineItem( &quot;Butterfingers&quot;, 1.00);</span>
+<span class="fc" id="L20">		milkyWay = new VendingMachineItem( &quot;Milky Way&quot;, 1.25);</span>
+<span class="fc" id="L21">		fifthAvenue = new VendingMachineItem( &quot;5th Avenue&quot;, 1.50);</span>
+<span class="fc" id="L22">		payDay = new VendingMachineItem(&quot;Pay Day&quot;, 1.75);</span>
+<span class="fc" id="L23">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L27">		building6008VendingMachine = null;</span>
+<span class="fc" id="L28">		reeseCup = null;</span>
+<span class="fc" id="L29">		butterfingers = null;</span>
+<span class="fc" id="L30">		milkyWay = null;</span>
+<span class="fc" id="L31">		fifthAvenue = null;</span>
+<span class="fc" id="L32">		payDay = null;</span>
+<span class="fc" id="L33">	}</span>
+	
+	/**
+	 * This is testing that a good item is place is a valid slot of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testAddItemGoodPosition() {
+<span class="fc" id="L40">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L41">		assertEquals(reeseCup, building6008VendingMachine.getItem(&quot;A&quot;));</span>
+<span class="fc" id="L42">	}</span>
+
+	/**
+	 * testing you cannot put an item in a slot that doesn't exist of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testAddItemBadPostion() {
+		
+		try {
+<span class="nc" id="L51">			building6008VendingMachine.addItem(reeseCup, &quot;E&quot;);</span>
+<span class="nc" id="L52">	        fail(); // if we got here, no exception was thrown, which is bad</span>
+<span class="nc" id="L53">	    } </span>
+<span class="fc" id="L54">	    catch (Exception e) {</span>
+<span class="fc" id="L55">	        final String expected = &quot;Invalid code for vending machine item&quot;;</span>
+<span class="fc" id="L56">	        assertEquals( expected, e.getMessage());</span>
+	    }		
+<span class="fc" id="L58">	}</span>
+
+	/**
+	 * testing you cannot fill a slot that is already filled of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testAddItemDuplicatedPostion() {
+<span class="fc" id="L65">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+		
+		try {
+<span class="nc" id="L68">			building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="nc" id="L69">	        fail(); // if we got here, no exception was thrown, which is bad</span>
+<span class="nc" id="L70">	    } </span>
+<span class="fc" id="L71">	    catch (Exception e) {</span>
+<span class="fc" id="L72">	        final String expected = &quot;Slot A already occupied&quot;;</span>
+<span class="fc" id="L73">	        assertEquals( expected, e.getMessage());</span>
+	    }		
+<span class="fc" id="L75">	}</span>
+
+	/**
+	 * testing that you can fill the machine with no errors of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testAddItemFull() {
+<span class="fc" id="L82">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L83">		building6008VendingMachine.addItem(butterfingers, &quot;B&quot;);</span>
+<span class="fc" id="L84">		building6008VendingMachine.addItem(milkyWay, &quot;C&quot;);</span>
+<span class="fc" id="L85">		building6008VendingMachine.addItem(fifthAvenue, &quot;D&quot;);</span>
+		
+<span class="fc" id="L87">		assertEquals(reeseCup, building6008VendingMachine.getItem(&quot;A&quot;));</span>
+<span class="fc" id="L88">		assertEquals(butterfingers, building6008VendingMachine.getItem(&quot;B&quot;));</span>
+<span class="fc" id="L89">		assertEquals(milkyWay, building6008VendingMachine.getItem(&quot;C&quot;));</span>
+<span class="fc" id="L90">		assertEquals(fifthAvenue, building6008VendingMachine.getItem(&quot;D&quot;));</span>
+<span class="fc" id="L91">	}</span>
+
+	/**
+	 * testing that an item was removed of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testRemoveItemGood() {
+<span class="fc" id="L98">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L99">		building6008VendingMachine.addItem(butterfingers, &quot;B&quot;);</span>
+<span class="fc" id="L100">		building6008VendingMachine.addItem(milkyWay, &quot;C&quot;);</span>
+<span class="fc" id="L101">		building6008VendingMachine.addItem(fifthAvenue, &quot;D&quot;);</span>
+		
+<span class="fc" id="L103">		building6008VendingMachine.removeItem(&quot;B&quot;);</span>
+<span class="fc" id="L104">		assertEquals(null, building6008VendingMachine.getItem(&quot;B&quot;));</span>
+		
+<span class="fc" id="L106">	}</span>
+
+	/**
+	 * Testing the return part of Removeitem, is working correctly of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testRemoveItemGoodReturn() {
+<span class="fc" id="L113">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L114">		building6008VendingMachine.addItem(butterfingers, &quot;B&quot;);</span>
+<span class="fc" id="L115">		building6008VendingMachine.addItem(milkyWay, &quot;C&quot;);</span>
+<span class="fc" id="L116">		building6008VendingMachine.addItem(fifthAvenue, &quot;D&quot;);</span>
+		
+<span class="fc" id="L118">		VendingMachineItem temp = building6008VendingMachine.removeItem(&quot;B&quot;);</span>
+		
+<span class="fc" id="L120">		assertEquals(butterfingers, temp);</span>
+
+		
+<span class="fc" id="L123">	}</span>
+
+	/**
+	 * Testing filling slots, removing an item, and replacing item with another kind of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testRemoveItemAddAnother() {
+<span class="fc" id="L130">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L131">		building6008VendingMachine.addItem(butterfingers, &quot;B&quot;);</span>
+<span class="fc" id="L132">		building6008VendingMachine.addItem(milkyWay, &quot;C&quot;);</span>
+<span class="fc" id="L133">		building6008VendingMachine.addItem(fifthAvenue, &quot;D&quot;);</span>
+		
+<span class="fc" id="L135">		building6008VendingMachine.removeItem(&quot;B&quot;);</span>
+<span class="fc" id="L136">		building6008VendingMachine.addItem(payDay, &quot;B&quot;);</span>
+		
+<span class="fc" id="L138">		assertEquals(payDay, building6008VendingMachine.getItem(&quot;B&quot;));</span>
+		
+<span class="fc" id="L140">	}</span>
+
+	/**
+	 * Testing the removal of an empty item of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testRemoveItemEnempty() {
+		try {
+<span class="nc" id="L148">			building6008VendingMachine.removeItem(&quot;B&quot;);</span>
+<span class="nc" id="L149">	        fail(); // if we got here, no exception was thrown, which is bad</span>
+<span class="nc" id="L150">	    } </span>
+<span class="fc" id="L151">	    catch (Exception e) {</span>
+<span class="fc" id="L152">	        final String expected = &quot;Slot B is empty -- cannot remove item&quot;;</span>
+<span class="fc" id="L153">	        assertEquals( expected, e.getMessage());</span>
+	    }
+<span class="fc" id="L155">	}</span>
+
+	/**
+	 * Testing the removal of an invalid item of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testRemoveItemInvalid() {
+		
+		try {
+<span class="nc" id="L164">			building6008VendingMachine.removeItem(&quot;E&quot;);</span>
+<span class="nc" id="L165">	        fail(); // if we got here, no exception was thrown, which is bad</span>
+<span class="nc" id="L166">	    } </span>
+<span class="fc" id="L167">	    catch (Exception e) {</span>
+<span class="fc" id="L168">	        final String expected = &quot;Invalid code for vending machine item&quot;;</span>
+<span class="fc" id="L169">	        assertEquals( expected, e.getMessage());</span>
+	    }
+<span class="fc" id="L171">	}</span>
+
+	/**
+	 * This test makes sure you an insert money of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testInsertMoneyPosAmount() {
+<span class="fc" id="L178">		building6008VendingMachine.insertMoney(1.00);</span>
+<span class="fc" id="L179">		assertEquals(1.00, building6008VendingMachine.getBalance(), 0.0001);</span>
+<span class="fc" id="L180">	}</span>
+
+	/**
+	 * This test makes sure if you insert money twice, the balance adds correctly of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testInsertMoneyPosAmountTwice() {
+<span class="fc" id="L187">		building6008VendingMachine.insertMoney(1.00);</span>
+<span class="fc" id="L188">		building6008VendingMachine.insertMoney(0.50);</span>
+<span class="fc" id="L189">		assertEquals(1.50, building6008VendingMachine.getBalance(), 0.0001);</span>
+<span class="fc" id="L190">	}</span>
+
+	/**
+	 * this test verify that the exception of adding negative numbers is working of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testInsertMoneyNegAmount() {
+		
+		try {
+<span class="nc" id="L199">			building6008VendingMachine.insertMoney(-1.00);</span>
+<span class="nc" id="L200">	        fail(); // if we got here, no exception was thrown, which is bad</span>
+<span class="nc" id="L201">	    } </span>
+<span class="fc" id="L202">	    catch (Exception e) {</span>
+<span class="fc" id="L203">	        final String expected = &quot;Invalid amount.  Amount must be &gt;= 0&quot;;</span>
+<span class="fc" id="L204">	        assertEquals( expected, e.getMessage());</span>
+	    }
+<span class="fc" id="L206">	}</span>
+
+	/**
+	 * This test makes sure that get Balance returns the correct amount of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testGetBalance() {
+<span class="fc" id="L213">		building6008VendingMachine.insertMoney(1.00);</span>
+<span class="fc" id="L214">		assertEquals(1.00, building6008VendingMachine.getBalance(), 0.0001);</span>
+<span class="fc" id="L215">	}</span>
+
+	/**
+	 * This test states that a valid purchase has happened of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseGoodReturn() {
+<span class="fc" id="L222">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L223">		building6008VendingMachine.insertMoney(.750);</span>
+<span class="fc" id="L224">		boolean temp = building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+		
+<span class="fc" id="L226">		assertEquals(true, temp);</span>
+<span class="fc" id="L227">	}</span>
+
+	/**
+	 * This test verify that there is enough money to buy the item of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseGoodBalance() {
+<span class="fc" id="L234">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L235">		building6008VendingMachine.insertMoney(.750);</span>
+<span class="fc" id="L236">		building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+		
+<span class="fc" id="L238">		assertEquals(0.00, building6008VendingMachine.getBalance(), 0.0001);</span>
+<span class="fc" id="L239">	}</span>
+
+	/**
+	 * This test verify that the purchased item has been remove of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseGoodItemRemoved() {
+<span class="fc" id="L246">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L247">		building6008VendingMachine.insertMoney(.750);</span>
+<span class="fc" id="L248">		building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+		
+<span class="fc" id="L250">		assertEquals(null, building6008VendingMachine.getItem(&quot;A&quot;));</span>
+<span class="fc" id="L251">	}</span>
+
+	/**
+	 * This test is when there is not enough money in the machine of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseBadBalance() {
+<span class="fc" id="L258">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L259">		building6008VendingMachine.insertMoney(0.50);</span>
+<span class="fc" id="L260">		boolean temp = building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+		
+<span class="fc" id="L262">		assertEquals(false, temp);</span>
+<span class="fc" id="L263">	}</span>
+
+	/**
+	 * This test is making sure you cannot buy from an empty slot of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseBadSelection() {
+<span class="fc" id="L270">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L271">		building6008VendingMachine.insertMoney(0.750);</span>
+<span class="fc" id="L272">		boolean temp = building6008VendingMachine.makePurchase(&quot;B&quot;);</span>
+		
+<span class="fc" id="L274">		assertEquals(false, temp);</span>
+<span class="fc" id="L275">	}</span>
+	
+	/**
+	 * This test is making sure you cannot buy from an invalid slot of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseInvalidSelection() {
+<span class="fc" id="L282">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L283">		building6008VendingMachine.insertMoney(0.750);</span>
+		
+		try {
+<span class="nc" id="L286">			building6008VendingMachine.makePurchase(&quot;E&quot;);</span>
+<span class="nc" id="L287">	        fail(); // if we got here, no exception was thrown, which is bad</span>
+<span class="nc" id="L288">	    } </span>
+<span class="fc" id="L289">	    catch (Exception e) {</span>
+<span class="fc" id="L290">	        final String expected = &quot;Invalid code for vending machine item&quot;;</span>
+<span class="fc" id="L291">	        assertEquals( expected, e.getMessage());</span>
+	    }
+<span class="fc" id="L293">	}</span>
+	/**
+	 * This is verifying, you cannot purchase from the same slot twice in a row of the {@link VendingMachine} class.
+	 * This is true because each slot only has one item
+	 */
+	@Test
+	public final void testMakePurchaseOfSameItem() {
+<span class="fc" id="L300">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L301">		building6008VendingMachine.insertMoney(.750);</span>
+<span class="fc" id="L302">		boolean temp = building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+		
+<span class="fc" id="L304">		temp = building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L305">		assertEquals(false, temp);</span>
+<span class="fc" id="L306">	}</span>
+
+	/**
+	 * This is making sure that the change is the right amount of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testReturnChangeRightAmount() {
+<span class="fc" id="L313">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L314">		building6008VendingMachine.insertMoney(1.750);</span>
+<span class="fc" id="L315">		building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L316">		double temp = building6008VendingMachine.returnChange();</span>
+		
+<span class="fc" id="L318">		assertEquals(1.00, temp, .0001);</span>
+<span class="fc" id="L319">	}</span>
+
+	/**
+	 * This is making sure that the Return change set the Balance back to 0.00 of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testReturnChangeBalanceSet() {
+<span class="fc" id="L326">		building6008VendingMachine.addItem(reeseCup, &quot;A&quot;);</span>
+<span class="fc" id="L327">		building6008VendingMachine.insertMoney(1.750);</span>
+<span class="fc" id="L328">		building6008VendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L329">		building6008VendingMachine.returnChange();</span>
+		
+<span class="fc" id="L331">		assertEquals(0.00, building6008VendingMachine.getBalance(), 0.0001);</span>
+<span class="fc" id="L332">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>AllTests (Apr 10, 2016 11:09:00 PM)</div></body></html>
